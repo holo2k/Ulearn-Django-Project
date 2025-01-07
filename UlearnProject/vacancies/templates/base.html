@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Шаблон{% endblock %}</title>
+    <link rel="stylesheet" href="{% static '/css/base.css' %}">
+    <link rel="stylesheet" href="{% static '/css/nav_panel.css' %}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    {% block extra_css %}{% endblock %}
+    <script src="{% static '/js/base.js' %}"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <h1 class="sitename clickable">JobMetrics</h1>
+            <img class="logo clickable" src="{% static 'img/main-logo.png' %}" alt="C# Logo" width="65px" height="65px">
+        </div>
+    </header>
+    
+    
+    <div class="wrapper">
+        <input type="checkbox" id="nav-toggle" hidden>
+        <nav class="nav">
+            <label for="nav-toggle" class="nav-toggle" onclick></label>
+            <ul>
+                <li class="{% if request.path == '/' %}active{% endif %}"><a href="/">Главная</a></li>
+                <li class="{% if request.path == '/demand/' %}active{% endif %}"><a href="/demand/">Востребованность</a></li>
+                <li class="{% if request.path == '/geography/' %}active{% endif %}"><a href="/geography/">География</a></li>
+                <li class="{% if request.path == '/skills/' %}active{% endif %}"><a href="/skills/">Навыки</a></li>
+                <li class="{% if request.path == '/last_vacancies/' %}active{% endif %}"><a href="/last_vacancies/">Последние вакансии</a></li>
+            </ul>
+        </nav>
+        <div class="mask-content"></div>
+
+        <main class="main">
+            <div class="main-container">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-col">
+                    <h4>Технологии программирования<h4>
+                    <ul>
+                        <li><a href="#">Беликов Никита Васильевич</a></li>
+                        <li><a href="#">РИ-230936</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <div class="social-links">
+                        <a href="https://t.me/holo21k"><i class="fab fa-telegram"></i></a>
+                        <a href="https://vk.com/holo2k"><i class="fab fa-vk"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </footer>
+</body>
+</html>
