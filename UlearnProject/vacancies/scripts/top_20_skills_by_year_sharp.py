@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 
 def run():
     # Создание DataFrame из данных
-    df = pd.read_csv('all_skills.csv')
+    df = pd.read_csv('sharp_skills.csv')
 
     # Создаем папки для хранения изображений и таблиц, если они еще не существуют
-    output_dir_images = 'images/all_skills/top_skills_by_year'
-    output_dir_html = 'tables/all_skills/top_skills_by_year'
+    output_dir_images = 'images/sharp_skills/top_skills_by_year'
+    output_dir_html = 'tables/sharp_skills/top_skills_by_year'
     os.makedirs(output_dir_images, exist_ok=True)
     os.makedirs(output_dir_html, exist_ok=True)
 
