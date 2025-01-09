@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}География{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/geography.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <h2 class="subsection-title">Уровень зарплат по городам для C# программиста</h2>
+
+    <div class="chart-section">
+        <img class="chart-img" src="{% static 'img/geography_salary_area_sharp.png' %}" alt="Уровень зарплат по городам для C#-программиста">
+        <div class="table-container">
+            {%include "tables/salary_area_sharp.html" %}
+        </div>
+    </div>
+
+    <h2 class="subsection-title">Доля вакансий по городам для C#-программиста</h2>
+
+    <div class="chart-section">
+        <img class="chart-img-pie" src="{% static 'img/geography_pie_sharp.png' %}" alt="Доля вакансий по городам для C#-программиста">
+        <div class="table-container">
+            {%include "tables/vacancies_pie_sharp.html" %}
+        </div>
+    </div>
+{% endblock %}

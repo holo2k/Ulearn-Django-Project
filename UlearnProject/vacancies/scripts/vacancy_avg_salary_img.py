@@ -8,10 +8,8 @@ import numpy as np
 
 
 def run():
-    # Подключение к базе данных
-    conn = sqlite3.connect('db.sqlite3')  # Используйте имя вашей базы данных
+    conn = sqlite3.connect('db.sqlite3')
 
-    # Выполнение первого SQL-запроса
     query_avg_salary = """
     SELECT
         SUBSTR(published_at, 1, 4) AS 'Год',
@@ -24,8 +22,7 @@ def run():
 
     df_avg_salary = pd.read_sql_query(query_avg_salary, conn)
 
-    # Выполнение второго SQL-запроса
-    query_avg_salary_backend = """
+    query_avg_salary_sharp = """
     SELECT
         SUBSTR(published_at, 1, 4) AS 'Год',
         ROUND(AVG(salary), 2) AS 'Средняя з/п для C# программиста'
@@ -36,17 +33,16 @@ def run():
         (name LIKE '%c#%'
         OR name LIKE '%C#%'
         OR name LIKE '%c sharp%'
-        OR name LIKE '%шарп%')
+        OR name LIKE '%шарп%'
+        OR name LIKE '%С#%')
     GROUP BY SUBSTR(published_at, 1, 4)
     ORDER BY SUBSTR(published_at, 1, 4)
     """
 
-    df_avg_salary_backend = pd.read_sql_query(query_avg_salary_backend, conn)
+    df_avg_salary_sharp = pd.read_sql_query(query_avg_salary_sharp, conn)
 
-    # Закрытие соединения с базой данных
     conn.close()
 
-    # Создание графика для средней зарплаты
     fig_avg_salary, ax_avg_salary = plt.subplots()
     ax_avg_salary.plot(
         df_avg_salary['Год'], df_avg_salary['Средняя з/п'], label='Средняя зарплата', marker='o')
@@ -54,33 +50,42 @@ def run():
     ax_avg_salary.legend()
     ax_avg_salary.grid(axis='y')
 
-    # Поворот меток оси x
     plt.xticks(rotation=60)
 
-    # Сохранение графика для средней зарплаты как изображения
     img_path_avg_salary = os.path.join('images', 'avg_salary.png')
     fig_avg_salary.savefig(img_path_avg_salary)
-    plt.close(fig_avg_salary)  # Закрыть график, чтобы освободить ресурсы
+    plt.close(fig_avg_salary)
     print("Saved")
 
-    # Создание графика для средней зарплаты бэка
-    fig_avg_salary_backend, ax_avg_salary_backend = plt.subplots()
-    ax_avg_salary_backend.plot(df_avg_salary_backend['Год'], df_avg_salary_backend['Средняя з/п для C# программиста'],
-                               label='Средняя зарплата', marker='o')
-    ax_avg_salary_backend.set_title(
+    fig_avg_salary_sharp, ax_avg_salary_sharp = plt.subplots()
+    ax_avg_salary_sharp.plot(df_avg_salary_sharp['Год'], df_avg_salary_sharp['Средняя з/п для C# программиста'],
+                             label='Средняя зарплата', marker='o')
+    ax_avg_salary_sharp.set_title(
         'Средняя зарплата по годам для C# программиста')
-    ax_avg_salary_backend.legend()
-    ax_avg_salary_backend.grid(axis='y')
+    ax_avg_salary_sharp.legend()
+    ax_avg_salary_sharp.grid(axis='y')
 
-    # Поворот меток оси x
     plt.xticks(rotation=60)
 
-    # Сохранение графика для средней зарплаты бэка как изображения
-    img_path_avg_salary_backend = os.path.join(
+    img_path_avg_salary_sharp = os.path.join(
         'images', 'avg_salary_sharp.png')
-    fig_avg_salary_backend.savefig(img_path_avg_salary_backend)
-    # Закрыть график, чтобы освободить ресурсы
-    plt.close(fig_avg_salary_backend)
+    fig_avg_salary_sharp.savefig(img_path_avg_salary_sharp)
+    plt.close(fig_avg_salary_sharp)
+
+    output_dir_html = 'tables'
+
+    output_html_path_all = os.path.join(
+        output_dir_html, f'vacancies_avg_salary_all.html')
+    output_html_path_sharp = os.path.join(
+        output_dir_html, f'vacancies_avg_salary_sharp.html')
+    df_avg_salary = df_avg_salary.head(20)
+    df_avg_salary_sharp = df_avg_salary_sharp.head(20)
+    df_avg_salary_sharp = df_avg_salary_sharp.reset_index()
+    df_avg_salary_sharp.to_html(
+        output_html_path_sharp, index=False, justify='center')
+
+    df_avg_salary = df_avg_salary.reset_index()
+    df_avg_salary.to_html(output_html_path_all, index=False, justify='center')
     print("Saved")
 
 

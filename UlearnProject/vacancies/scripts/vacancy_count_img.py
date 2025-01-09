@@ -7,10 +7,8 @@ import numpy as np
 
 
 def run():
-    # Подключение к базе данных
-    conn = sqlite3.connect('db.sqlite3')  # Используйте имя вашей базы данных
+    conn = sqlite3.connect('db.sqlite3')
 
-    # Выполнение первого SQL-запроса
     query_all = """
     SELECT
         SUBSTR(published_at, 1, 4) AS 'Год',
@@ -22,7 +20,6 @@ def run():
 
     df_all = pd.read_sql_query(query_all, conn)
 
-    # Выполнение второго SQL-запроса
     query_sharp = """
     SELECT
         SUBSTR(published_at, 1, 4) AS 'Год',
@@ -38,10 +35,8 @@ def run():
 
     df_sharp = pd.read_sql_query(query_sharp, conn)
 
-    # Закрытие соединения с базой данных
     conn.close()
 
-    # Создание графика для всех вакансий
     fig_all, ax_all = plt.subplots()
     years_all = np.arange(len(df_all['Год']))
     ax_all.bar(
@@ -52,13 +47,11 @@ def run():
     ax_all.legend()
     ax_all.grid(axis='y')
 
-    # Сохранение графика для всех вакансий как изображения
     img_path_all = os.path.join('images',  'vacancies_all.png')
     fig_all.savefig(img_path_all)
-    plt.close(fig_all)  # Закрыть график, чтобы освободить ресурсы
+    plt.close(fig_all)
     print("Saved")
 
-    # Создание графика для вакансий бэка
     fig_sharp, ax_sharp = plt.subplots()
     years_sharp = np.arange(len(df_sharp['Год']))
     ax_sharp.bar(
@@ -70,10 +63,24 @@ def run():
     ax_sharp.legend()
     ax_sharp.grid(axis='y')
 
-    # Сохранение графика для вакансий бэка как изображения
     img_path_sharp = os.path.join('images', 'vacancies_count_sharp.png')
     fig_sharp.savefig(img_path_sharp)
-    plt.close(fig_sharp)  # Закрыть график, чтобы освободить ресурсы
+    plt.close(fig_sharp)
+
+    output_dir_html = 'tables'
+
+    output_html_path_all = os.path.join(
+        output_dir_html, f'vacancies_count_all.html')
+    output_html_path_sharp = os.path.join(
+        output_dir_html, f'vacancies_count_sharp.html')
+
+    df_all = df_all.head(20)
+    df_sharp = df_sharp.head(20)
+    df_sharp = df_sharp.reset_index()
+    df_sharp.to_html(output_html_path_sharp, index=False, justify='center')
+
+    df_all = df_all.reset_index()
+    df_all.to_html(output_html_path_all, index=False, justify='center')
     print("Saved")
 
 

@@ -33,7 +33,7 @@ def run():
                 skills_all_by_year[year] = skills
 
             # Проверка наличия ключевых навыков в имени вакансии
-            sharp_keywords = ['c#', 'C#', 'c sharp', 'шарп']
+            sharp_keywords = ['c#', 'C#', 'c sharp', 'шарп', 'С#']
             if any(word in row['name'].lower() for word in sharp_keywords):
                 if year in skills_sharp_by_year:
                     skills_sharp_by_year[year].extend(skills)

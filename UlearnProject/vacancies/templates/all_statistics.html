@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}География{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/geography.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <h2 class="subsection-title">Динамика уровня зарплат по годам</h2>
+
+    <div class="chart-section">
+        <img class="chart-img" src="{% static 'img/avg_salary.png' %}" alt="Динамика уровня зарплат по годам">
+        <div class="table-container">
+            {%include "tables/vacancies_avg_salary_all.html" %}
+        </div>
+    </div>
+
+    <h2 class="subsection-title">Динамика количества вакансий по годам</h2>
+
+    <div class="chart-section">
+        <img class="chart-img" src="{% static 'img/vacancies_all.png' %}" alt="Динамика количества вакансий по годам">
+        <div class="table-container">
+            {%include "tables/vacancies_count_all.html" %}
+        </div>
+    </div>
+
+    <h2 class="subsection-title">Уровень зарплат по городам</h2>
+
+    <div class="chart-section">
+        <img class="chart-img" src="{% static 'img/geography_salary_area_all.png' %}" alt="Уровень зарплат по городам">
+        <div class="table-container">
+            {%include "tables/salary_area_all.html" %}
+        </div>
+    </div>
+
+    <h2 class="subsection-title">Доля вакансий по городам</h2>
+
+    <div class="chart-section">
+        <img class="chart-img-pie" src="{% static 'img/geography_pie_all.png' %}" alt="Доля вакансий по городам">
+        <div class="table-container">
+            {%include "tables/vacancies_pie_all.html" %}
+        </div>
+    </div>
+
+    <h1>Топ-20 навыков за {{ selected_year }} год</h1>
+
+    <form method="get" id="year-form" class="form">
+        <label for="year">Выберите год:</label>
+        <select id="year" name="year" onchange="submit()">
+            {% for year in available_years %}
+            <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>
+                {{ year }}
+            </option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <!-- Подключение соответствующего шаблона -->
+    <div id="skills-table" class="skills-table">
+        {% include template_path %}
+    </div>
+    
+{% endblock %}

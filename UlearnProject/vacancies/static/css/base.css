@@ -71,27 +71,20 @@ body {
 
 .sidebar a {
     text-decoration: none;
-    /* Убирает стандартное подчеркивание */
     color: black;
-    /* Цвет текста для обычных ссылок */
     padding: 10px;
-    /* Добавляет отступ вокруг текста ссылок */
     display: block;
     transition: background-color 0.3s ease;
-    /* Плавное изменение цвета фона при наведении */
     border-radius: 10px;
 }
 
 .sidebar a:hover {
     background-color: rgb(255, 255, 255);
-    /* Цвет фона при наведении */
 }
 
 .sidebar li.active a {
     background-color: rgb(255, 255, 255);
-    /* Цвет фона для активной ссылки */
     color: black;
-    /* Цвет текста для активной ссылки */
 }
 
 .main {

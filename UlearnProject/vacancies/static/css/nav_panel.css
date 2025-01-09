@@ -298,15 +298,11 @@ body {
     color: #dadada;
     width: 100%;
     text-decoration: none;
-    /* плавный переход */
     -webkit-transition: color .5s ease, padding .5s ease;
     -moz-transition: color .5s ease, padding .5s ease;
     transition: color .5s ease, padding .5s ease;
 }
 
-/**
- * состояние ссылок меню при наведении
- */
 
 .nav>ul>li>a:hover,
 .nav>ul>li>a:focus {
