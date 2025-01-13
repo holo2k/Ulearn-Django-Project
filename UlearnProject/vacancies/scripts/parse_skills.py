@@ -1,4 +1,3 @@
-# python manage.py runscript parse_skills -v2
 import csv
 from collections import Counter
 
@@ -23,16 +22,13 @@ def run():
             year = row['published_at'][:4]
             skills = row['key_skills'].split('\n')
 
-            # Очистка и разделение навыков
             skills = [skill.strip() for skill in skills if skill.strip()]
 
-            # Проверка наличия года в словаре, инициализация списка при необходимости
             if year in skills_all_by_year:
                 skills_all_by_year[year].extend(skills)
             else:
                 skills_all_by_year[year] = skills
 
-            # Проверка наличия ключевых навыков в имени вакансии
             sharp_keywords = ['c#', 'C#', 'c sharp', 'шарп', 'С#']
             if any(word in row['name'].lower() for word in sharp_keywords):
                 if year in skills_sharp_by_year:

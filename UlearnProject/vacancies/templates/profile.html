@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <h2 class="profile-title">Профиль {{user.username}}</h2>
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+  <form id="profile-form" method="POST" enctype="multipart/form-data" class="profile-form">
+    {% csrf_token %}
+    
+    <!-- Отображение аватара -->
+    <div class="avatar-container">
+      <p><strong>Аватар:</strong></p>
+      <label for="avatar-input" class="avatar-label">
+        {% if user.profile.avatar %}
+          <img id="avatar-img" src="{{ user.profile.avatar.url }}" alt="Аватар" class="avatar-img">
+        {% else %}
+          <img id="avatar-img" src="{% static 'img/html_images/user.png' %}" alt="Аватар" class="avatar-img">
+        {% endif %}
+      </label>
+    
+      <!-- Кнопка для выбора нового изображения -->
+      <input type="file" name="avatar" id="avatar-input" class="avatar-input" style="display: none;" onchange="previewImage(event)">
+    </div>
+    
+    <!-- Поле для изменения имени -->
+    <div class="input-container">
+      <label for="{{ form.first_name.id_for_label }}" class="input-label">Имя</label>
+      {{ form.first_name }}
+    </div>
+
+    <button type="submit" class="submit-button">Сохранить</button>
+    
+  </form>
+
+  <!-- Кнопка для выхода -->
+  <form method="POST" action="/logout/" class = "profile-form">
+    {% csrf_token %}
+    <button type="submit" class="submit-button-exit">Выйти</button>
+  </form>
+
+  <script>
+    // Функция для предварительного отображения выбранного изображения
+    function previewImage(event) {
+      var file = event.target.files[0];
+      var reader = new FileReader();
+      var form = document.getElementById('profile-form');
+      reader.onload = function(e) {
+        document.getElementById('avatar-img').src = e.target.result;
+      };
+      
+      reader.readAsDataURL(file);
+      form.submit(); // Отправка формы при изменении аватара
+    }
+  </script>
+{% endblock %}

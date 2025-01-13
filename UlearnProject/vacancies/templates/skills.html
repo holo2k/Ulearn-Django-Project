@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Навыки{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/page_info.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <h1>Топ-20 навыков C# программиста за {{ selected_year }} год</h1>
+
+    <form method="get" id="year-form" class="form">
+        <label for="year" style="font-size:30px;">Выберите год:</label>
+        <select id="year" name="year" style="font-size:30px;" onchange="submit()">
+            {% for year in available_years %}
+            <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>
+                {{ year }}
+            </option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <!-- Подключение соответствующего шаблона -->
+    <div class="chart-section">
+        <img id="chart-img" class="chart-img" style="width:900px" src="{% static 'img/sharp_skills/top_skills_by_year/top_skills_' %}{{ selected_year }}.png"/>
+        <div id="skills-table" class="skills-table">
+            {% include template_path %}
+        </div>
+    </div>
+    
+{% endblock %}

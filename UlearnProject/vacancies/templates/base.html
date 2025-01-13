@@ -4,12 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Шаблон{% endblock %}</title>
+    <title>{% block title %}JobMetrics{% endblock %}</title>
     <link rel="stylesheet" href="{% static '/css/base.css' %}">
     <link rel="stylesheet" href="{% static '/css/nav_panel.css' %}">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     {% block extra_css %}{% endblock %}
-    <script src="{% static '/js/base.js' %}"></script>
 </head>
 <body>
     <header class="header">
@@ -25,6 +24,7 @@
         <nav class="nav">
             <label for="nav-toggle" class="nav-toggle" onclick></label>
             <ul>
+                <li class="{% if request.path == '/profile/' %}active{% endif %}"><a href="/profile/">Профиль</a></li>
                 <li class="{% if request.path == '/' %}active{% endif %}"><a href="/">Главная</a></li>
                 <li class="{% if request.path == '/all_statistics/' %}active{% endif %}"><a href="/all_statistics/">Общая статистика</a></li>
                 <li class="{% if request.path == '/demand/' %}active{% endif %}"><a href="/demand/">Востребованность</a></li>

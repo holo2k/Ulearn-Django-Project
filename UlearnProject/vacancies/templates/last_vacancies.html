@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Навыки{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/page_info.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h1>Последние вакансии</h1>
+
+<ul>
+    {% for vacancy in vacancies %}
+        <li>
+            <p class="vacancy-title" data-vacancy-id="{{ vacancy.0 }}">
+                <img class="arrow-icon" src="{% static '/img/html_images/arrow.png' %}" alt="Arrow Right" width="15">
+                <strong>{{ vacancy.2 }}</strong> ({{ vacancy.7 }})
+            </p>
+            <div class="details" id="details-{{ vacancy.0 }}" style="display: none;">
+                <p>Компания: {{ vacancy.3 }}</p>
+                <p>Зарплата: {% if vacancy.4 %}{{ vacancy.4 }}{% else %}Не указано{% endif %}
+                {% if vacancy.6 is not None %}
+                    {% if vacancy.6 %}(после вычета налогов){% else %}(до вычета налогов){% endif %}
+                {% else %} {% endif %}</p>
+                <p>Валюта: {% if vacancy.5 %}{{ vacancy.5 }}{% else %}Не указано{% endif %}</p>
+                <p>Описание вакансии: {{ vacancy.9|truncatechars:300 }}</p>
+                <p>Навыки: {% if vacancy.10 %}{{ vacancy.10|join:', ' }}{% else %}Не указано{% endif %}</p>
+                <p>Дата публикации: {{ vacancy.8 }}</p>
+                <a class="vacancy-link" href="{{ vacancy.1 }}">Посмотреть подробнее...</a>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
+<script src="{% static '/js/last_vacancies.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static '/css/last_vacancies.css' %}">
+    
+{% endblock %}

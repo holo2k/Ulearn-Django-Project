@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Востребованность{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/page_info.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <h2 class="subsection-title">Уровень зарплат по годам для C# программиста</h2>
+
+    <div class="chart-section">
+        <img class="chart-img" src="{% static 'img/avg_salary_sharp.png' %}" alt="Уровень зарплат по городам для C#-программиста">
+        <div class="table-container">
+            {%include "tables/vacancies_avg_salary_sharp.html" %}
+        </div>
+    </div>
+
+    <h2 class="subsection-title">Количество вакансий по годам для C#-программиста</h2>
+
+    <div class="chart-section">
+        <img class="chart-img-pie" src="{% static 'img/vacancies_count_sharp.png' %}" alt="Количество вакансий по годам для C#-программиста">
+        <div class="table-container">
+            {%include "tables/vacancies_count_sharp.html" %}
+        </div>
+    </div>
+{% endblock %}

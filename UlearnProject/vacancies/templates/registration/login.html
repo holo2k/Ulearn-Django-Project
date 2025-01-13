@@ -1,0 +1,17 @@
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/auth.css' %}">
+
+<div class="login">
+    <div class="form">
+            <form class="login-form" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Войти в аккаунт</button>
+            </form>
+            <p><a href="../../signup">Зарегистрироваться</a></p>
+    </div>
+</div>
+
+  

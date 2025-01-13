@@ -1,5 +1,3 @@
-# python manage.py runscript get_vacancies -v2
-
 import requests
 from datetime import datetime
 import re
@@ -116,7 +114,7 @@ def run():
     params = {
         "text": " OR ".join(keywords),
         "date_from": today.isoformat(),
-        "per_page": 10,
+        "per_page": 20,
         "order_by": "publication_time",
         "search_field": "name"
     }
